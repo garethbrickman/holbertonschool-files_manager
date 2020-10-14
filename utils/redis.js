@@ -29,7 +29,7 @@ class RedisClient {
     await this.clientSet(key, value, 'EX', duration);
   }
 
-  async det(key) {
+  async del(key) {
     await this.clientDel(key);
   }
 }
