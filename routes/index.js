@@ -1,6 +1,7 @@
 import express from 'express';
 
 const AppController = require('../controllers/AppController.js');
+const UsersController = require('../controllers/UsersController.js');
 
 const router = express.Router();
 
@@ -8,5 +9,7 @@ const router = express.Router();
 router.get('/status', AppController.getStatus);
 // returns the number of users and files in DB
 router.get('/stats', AppController.getStats);
+// creates a new user
+router.post('/users', UsersController.postNew);
 
 export default router;
