@@ -24,14 +24,11 @@ class DBClient {
     return !!this.db;
   }
 
+  // users collection methods
+
   async nbUsers() {
     const countUsers = await this.db.collection('users').countDocuments();
     return countUsers;
-  }
-
-  async nbFiles() {
-    const countFiles = await this.db.collection('files').countDocuments();
-    return countFiles;
   }
 
   async findUser(query) {
@@ -46,6 +43,26 @@ class DBClient {
     const newUser = await this.db.collection('users').findOne({ email });
 
     return { id: newUser._id, email: newUser.email };
+  }
+
+  // files collection methods
+
+  async nbFiles() {
+    const countFiles = await this.db.collection('files').countDocuments();
+    return countFiles;
+  }
+
+  async findFile(query) {
+    const file = await this.db.collection('files').findOne(query);
+
+    return file;
+  }
+
+  async uploadFile(data) {
+    await this.db.collection('files').insertOne(data);
+
+    const newFile = await this.db.collection('files').findOne(data);
+    return newFile;
   }
 }
 const dbClient = new DBClient();

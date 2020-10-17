@@ -3,6 +3,7 @@ import auth from '../utils/auth';
 import { getStatus, getStats } from '../controllers/AppController';
 import { postNew, getMe } from '../controllers/UsersController';
 import { getConnect, getDisconnect } from '../controllers/AuthController';
+import { postUpload } from '../controllers/FilesController';
 
 const router = express.Router();
 
@@ -26,5 +27,10 @@ router.get('/users/me', auth, getMe);
 router.get('/connect', getConnect);
 // sign-out the user based on the token
 router.get('/disconnect', auth, getDisconnect);
+
+// FilesController routs
+
+// creates a new file in the db and in disk
+router.post('/files', auth, postUpload);
 
 export default router;
