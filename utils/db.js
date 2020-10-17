@@ -3,25 +3,25 @@ import { MongoClient } from 'mongodb';
 class DBClient {
   constructor() {
     this.db = null;
-    /* use env variables or specified defaults */
-    const port = process.env.DB_HOST || 'localhost';
-    const host = process.env.DB_PORT || 27017;
+    // Use either env vars or defaults
+    const host = process.env.DB_HOST || 'localhost';
+    const port = process.env.DB_PORT || 27017;
     const database = process.env.DB_DATABASE || 'files_manager';
 
-    /* MongoDB connection */
+    // MongoDB client connection
 
-    MongoClient.connect(`mongodb://${host}:${port}/`, function (err, client) {
+    const url = `mongodb://${host}:${port}/`;
+
+    MongoClient.connect(url, { useUnifiedTopology: true }, (err, db) => {
       if (err) console.log(err);
-      this.db = client.db(database);
+      this.db = db.db(database);
       this.db.createCollection('users');
       this.db.createCollection('files');
     });
   }
 
-  // Methods
-
   isAlive() {
-    return !this.db;
+    return !!this.db;
   }
 
   async nbUsers() {
